@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'http_service.dart';
 import 'post_model.dart';
+import 'detail.dart';
 
 class PostsPage extends StatelessWidget {
   final HttpService httpService = HttpService();
@@ -19,15 +20,25 @@ class PostsPage extends StatelessWidget {
             return ListView(
               children: posts!
                   .map(
-                    (Post post) => Card(
-                      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0), 
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular( 12.0), 
-                          ),
-                          child: ListTile(
-                            title: Text(post.title),
-                            subtitle: Text("${post.userId}"),
-                          ),
+                    (Post postData) => Card(
+                      margin:
+                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: ListTile(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  DetailPage(postData: postData),
+                            ),
+                          );
+                        },
+                        title: Text(postData.title),
+                        subtitle: Text("${postData.userId}"),
+                      ),
                     ),
                   )
                   .toList(),
